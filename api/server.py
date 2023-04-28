@@ -20,6 +20,7 @@ SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
 
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
+
 def remove_symbols(json_dict):
     updated_dict = {}
     for key, value in json_dict.items():
@@ -38,6 +39,17 @@ def remove_symbols(json_dict):
         else:
             updated_dict[key] = value
     return updated_dict
+
+
+def xml_to_dict(xml_data):
+    try:
+        data_dict = xmltodict.parse(xml_data)
+    except xmltodict.expat.ExpatError as e:
+        error_msg = f"Error parsing XML data: {e}"
+        return (jsonify({'error': error_msg}), 400)
+    
+    data_dict = remove_symbols(data_dict)
+    return data_dict
 
 
 def transform_xml_to_json(func):
@@ -62,11 +74,18 @@ def transform_xml_to_json(func):
             data = requests.get(api_url).content
         except requests.exceptions.RequestException as e:
             return jsonify(f'API request failed due to {str(e)}'), 500
-        data_dict = xmltodict.parse(data)
-        data_dict = remove_symbols(data_dict)
-        kwargs["json_data"] = json.dumps(data_dict)
+    
+        data_dict = xml_to_dict.parse(data)
+
+        try:
+            kwargs["json_data"] = json.dumps(data_dict)
+        except xmltodict.expat.ExpatError as e:
+            error_msg = f"Error encoding JSON data: {e}"
+            return (jsonify({error_msg}), 500)
+        
         return func(*args, **kwargs)
     return decorator
+
 
 @app.route('/api/<int:year>/<int:round>', methods=['GET'])
 @transform_xml_to_json
