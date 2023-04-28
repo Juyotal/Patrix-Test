@@ -26,12 +26,12 @@ A little middleware API that converts xml data from a call to Formula 1 racing r
 Once our server is running, our api can only be accessed via 1 endpoint. `GET /api/<year>/<round>`
 
 ### Parameters
-Our endpoint url takes in 2 parameters: the year, which must be an integer value and within the range (1950 <= year >= present) and the round which is equally a positive interger.
+Our endpoint url takes in *2 parameters*: the year, which must be an integer value and within the range `(1950 <= year >= present)` and the round which is equally a `positive interger`.
 
 ### Response 
 The Output Response is a Json representing the Race Tournament result for the Specific year and the Specific Round.
 
-In your Browser, or with help of API Playground like Postman, make a call to url of the form following the example below (localhost:5000/api/2000/3)
+In your Browser, or with help of API Playground like Postman, make a call to url of the form following the example below [localhost:5000/api/2000/3](localhost:5000/api/2000/3)
 
 # Testing.
 Run tests to the API by running in terminal the command `pytest tests/api_tests.py -vv`
