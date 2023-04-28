@@ -38,4 +38,4 @@ Run tests to the API by running in terminal the command `pytest tests/api_tests.
 and new Tests can be added to the Tests Directory.
 
 # Swagger UI
-[Swagger UI](http://127.0.0.1:5000/api/) will give you a detailed view of the endpoints available to the API and you can run requests here aswell.
+with running server, [Swagger UI](http://127.0.0.1:5000/api/) will give you a detailed view of the endpoints available to the API and you can run requests here aswell.
